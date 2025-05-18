@@ -21,6 +21,7 @@
     "@tailwindcss/vite": "^4.1.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "framer-motion": "^12.12.1",
     "gh-pages": "^6.3.0",
     "jquery": "^3.7.1",
     "jquery-mask-plugin": "^1.14.16",
@@ -31,6 +32,7 @@
     "prop-types": "^15.8.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.6.0",
     "tailwind-merge": "^3.1.0",
     "tailwindcss-animate": "^1.0.7"
   },
