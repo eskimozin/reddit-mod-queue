@@ -6,8 +6,9 @@
   "homepage": "https://github.com/eskimozin/reddit-mod-queue",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "npm run lint && vite build",
     "lint": "eslint .",
+    "lint:fix": "eslint src/**/*.jsx --fix",
     "preview": "vite preview",
     "deploy": "vite build && gh-pages -d dist"
   },
