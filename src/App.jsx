@@ -1,18 +1,57 @@
-function App() {
+import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
+import {
+  ArchiveBoxXMarkIcon,
+  ChevronDownIcon,
+  PencilIcon,
+  Square2StackIcon,
+  TrashIcon,
+} from '@heroicons/react/16/solid'
+
+export default function App() {
   return (
-    <main
-      className="flex flex-col items-center justify-center min-h-svh [&_*]:tracking-[0.5px]">
-      <div className="px-4 md:px-40 lg:px-60 w-full">
-        <section className={"xl:px-20 2xl:px-80 my-16"}>
-          <h1 className={"text-2xl font-medium p-0 mb-8 text-center"}>...</h1>
-          
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi iste facere suscipit corporis rem nesciunt a. Itaque, impedit, ipsum officiis distinctio tenetur ducimus, maxime natus odio modi consequuntur ratione sequi? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officiis adipisci vitae asperiores nam ipsa, necessitatibus eius repellat qui quod repellendus pariatur provident? Quibusdam inventore itaque consequuntur veniam mollitia ut dolorem. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus ex sunt obcaecati velit natus nulla commodi consequatur, ab fugiat enim molestias in, neque expedita omnis iste. Alias magni eum officia. Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam distinctio eos sapiente ex hic delectus eum alias voluptatum, a ut quaerat quos repellendus tempora rem! Sunt quas accusamus fuga hic. Lorem ipsum dolor sit amet, consectetur adipisicing elit. At quo possimus beatae voluptatem similique consectetur corrupti quis, a voluptates nulla rem distinctio ipsa laudantium ducimus optio aliquam adipisci repellendus ab!
-          </p>
-        </section>
-      </div>
-    </main>
+    <div className="fixed top-24 w-52 text-right">
+      <Menu>
+        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-gray-800 px-3 py-1.5 text-sm/6 font-semibold text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
+          Options
+          <ChevronDownIcon className="size-4 fill-white/60"/>
+        </MenuButton>
+        
+        <MenuItems
+          transition
+          anchor="bottom end"
+          className="w-52 origin-top-right rounded-xl border border-white/5 bg-white/5 p-1 text-sm/6 text-white transition duration-100 ease-out [--anchor-gap:--spacing(1)] focus:outline-none data-closed:scale-95 data-closed:opacity-0 mt-1"
+        >
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+              <PencilIcon className="size-4 fill-white/30"/>
+              Edit
+              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘E</kbd>
+            </button>
+          </MenuItem>
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+              <Square2StackIcon className="size-4 fill-white/30"/>
+              Duplicate
+              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
+            </button>
+          </MenuItem>
+          <div className="my-1 h-px bg-white/5"/>
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+              <ArchiveBoxXMarkIcon className="size-4 fill-white/30"/>
+              Archive
+              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘A</kbd>
+            </button>
+          </MenuItem>
+          <MenuItem>
+            <button className="group flex w-full items-center gap-2 rounded-lg px-3 py-1.5 data-focus:bg-white/10">
+              <TrashIcon className="size-4 fill-white/30"/>
+              Delete
+              <kbd className="ml-auto hidden font-sans text-xs text-white/50 group-data-focus:inline">⌘D</kbd>
+            </button>
+          </MenuItem>
+        </MenuItems>
+      </Menu>
+    </div>
   )
 }
-
-export default App
