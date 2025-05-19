@@ -3,7 +3,7 @@ import Spotlight from "../spotlight/Spotlight.tsx";
 import PropTypes from "prop-types";
 import {Link} from "react-router";
 
-export default function Card({title, img, subtitle, description, action, btnLabel, link}) {
+export default function Card({title, img, subtitle, description, action, btnLabel = "Abrir no Reddit", link}) {
   let ret = (
     <Spotlight>
       <div
@@ -15,11 +15,11 @@ export default function Card({title, img, subtitle, description, action, btnLabe
             </div>
           ) : ""
         }
-        <div className={"relative z-20 p-4"}>
-          <h2 className="block font-semibold text-2xl">{title}</h2>
-          <p className="text-gray-400 font-semibold text-lg mb-0">{subtitle}</p>
-          <p className="mt-3 mb-4">{description}</p>
-          <Button className="inline-flex items-center gap-2 rounded-[5px] bg-orange-500 border-orange-600 focus:bg-orange-600 hover:bg-orange-600 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
+        <div className={"relative z-20 p-4 pt-5"}>
+          <h2 className="block font-semibold text-xl">{title}</h2>
+          <p className="text-gray-400 font-semibold mb-0">{subtitle}</p>
+          <p className="mt-3 mb-4 pb-1">{description}</p>
+          <Button className="inline-flex items-center gap-2 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
             (e) => {
               e.stopPropagation();
               e.stopImmediatePropagation();
@@ -27,6 +27,9 @@ export default function Card({title, img, subtitle, description, action, btnLabe
             }
           }>
             {btnLabel}
+            <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#FFF">
+              <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/>
+            </svg>
           </Button>
         </div>
       </div>
