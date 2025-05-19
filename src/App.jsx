@@ -16,28 +16,38 @@ const Main = () => {
   const [postsPending, setPostsPending] = useState(null);
   
   useEffect(() => {
-    // Requisitar à API no banco de dados os itens pendentes de moderação, além dos dados de último post que entrou na fila
-    const response = axios.post(`${config.host}/api/get-latest-register/`);
-    
-    response.then(res => {
-      const {data} = res;
-      if (data && data["rows"][0][0]["datetime_register"]) {
-        const datetimeRegister = data["rows"][0][0]["datetime_register"];
-        setLatestRegister(datetimeRegister);
-      }
-      setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
-    });
+    try {
+      // Requisitar à API no banco de dados os itens pendentes de moderação, além dos dados de último post que entrou na fila
+      const response = axios.post(`${config.host}/api/get-latest-register/`);
+      
+      response.then(res => {
+        const {data} = res;
+        if (data && data["rows"][0][0]["datetime_register"]) {
+          const datetimeRegister = data["rows"][0][0]["datetime_register"];
+          setLatestRegister(datetimeRegister);
+        }
+        setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
+      });
+    } catch (error) {
+      console.log(error);
+      alert("Um erro ocorreu! " + error.message);
+    }
   }, []);
   
   useEffect(() => {
     // Requisitar à API no banco de dados os itens pendentes de moderação, além dos dados de último post que entrou na fila
-    const response = axios.post(`${config.host}/api/get-unmoderates-posts/`);
-    
-    response.then(res => {
-      const {data} = res;
-      if (data && data["rows"][0].length > 0) setPostsPending(data["rows"][0])
-      setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
-    });
+    try {
+      const response = axios.post(`${config.host}/api/get-unmoderates-posts/`);
+      
+      response.then(res => {
+        const {data} = res;
+        if (data && data["rows"][0].length > 0) setPostsPending(data["rows"][0])
+        setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
+      });
+    } catch (error) {
+      console.log(error);
+      alert("Um erro ocorreu! " + error.message);
+    }
   }, []);
   
   return (
@@ -56,11 +66,11 @@ const Main = () => {
         <Grid>
           <AnimatedComponents>
             {
-              postsPending && postsPending.map((post, index) => {
+              postsPending ? postsPending.map((post, index) => {
                 const props = {
                   title: post["post_title"],
                   subtitle: post["post_author_name"],
-                  description: "Description",
+                  description: "",
                   img: post["post_img_url"],
                   link: post["reddit_link"],
                   action: (() => {
@@ -69,7 +79,8 @@ const Main = () => {
                 }
                 
                 return <Card {...props} key={index}/>
-              })
+              }) : <Card title={"Não há nada por aqui..."} subtitle={"Tudo certo!"} description={"Sem posts para a moderação avaliar. Pegue uma bebida e aguarde."} link={"https://reddit.com/r/eskimozin"} btnLabel={"Ir pro subreddit"} action={() => {
+              }}/>
             }
           </AnimatedComponents>
         </Grid>
