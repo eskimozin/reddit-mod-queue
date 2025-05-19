@@ -122,7 +122,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes index element={componentMain}>
-        <Route path="/" element={componentMain}/>
+        <Route path="/reddit-mod-queue/" element={componentMain}/>
       </Routes>
     </BrowserRouter>
   )
