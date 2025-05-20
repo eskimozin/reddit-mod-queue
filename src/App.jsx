@@ -54,13 +54,13 @@ const Main = () => {
   
   return (
     <main className="flex align-center justify-center min-h-screen">
-      <div className="container my-5 lg:my-10">
+      <div className="container mx-3 my-8 lg:my-10">
         <AnimatedComponents>
-          <hgroup className={"flex items-center gap-3 mb-8"}>
+          <hgroup className={"flex items-center gap-3 mb-8 flex-wrap"}>
             <img src={"https://styles.redditmedia.com/t5_djonfq/styles/communityIcon_so6opouwbkwe1.jpeg?format=pjpg&s=87d36ec6c490962999a51fdc8b64bf180892131a"} alt="Foto de perfil do servidor" className={"rounded-full w-[50px] h-[50px] object-cover"}/>
             <div className={"block"}>
-              <h1 className={"text-balance font-bold text-3xl"}>Fila de moderação do r<Arial>/</Arial>eskimozin</h1>
-              <p className={"m-0 text-gray-400 text-balance"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação com a API do Reddit é feita a cada 5 minutos.</p>
+              <h1 className={"text-balance font-bold text-3xl"}>Fila de moderação do <span className={"text-orange-600"}>r<Arial>/</Arial>eskimozin</span></h1>
+              <p className={"mb-0 mt-1 text-gray-400 text-balance max-w-[600px] text-balance"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila de moderação há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação com a API do Reddit é feita a cada 5 minutos.</p>
             </div>
           </hgroup>
         </AnimatedComponents>
