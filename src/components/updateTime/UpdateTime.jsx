@@ -1,48 +1,38 @@
 import PropTypes from "prop-types";
 import moment from 'moment-timezone';
-
 import {useCallback, useEffect, useState} from "react";
 
 export default function UpdateTime({time}) {
-  let momentTime = moment(time).utcOffset(3 * 60);
+  // Força a interpretação do `time` como UTC-3 (ex: São Paulo)
+  const momentTime = moment.tz(time, 'America/Sao_Paulo');
+  
   const [formattedTime, setFormattedTime] = useState("pouco");
   
-  console.log("Time: ", momentTime);
-  console.log("Diff (agora para momentTime): ", moment().utc().diff(momentTime, "hours"));
-  console.log("Now: ", moment.utc());
-  console.log("Now [-03:00 UTC]: ", moment.utc().tz("America/Sao_Paulo"));
-  
   const intervalFn = useCallback(() => {
-    const momentNow = moment.utc();
+    const momentNow = moment.tz('America/Sao_Paulo');
     
-    const [
-      seconds,
-      minutes,
-      hours
-    ] = [
-      momentNow.diff(momentTime, "seconds"),
-      momentNow.diff(momentTime, "minutes"),
-      momentNow.diff(momentTime, "hours"),
-    ]
+    const seconds = momentNow.diff(momentTime, "seconds");
+    const minutes = momentNow.diff(momentTime, "minutes");
+    let hours = momentNow.diff(momentTime, "hours");
+    
+    // Implementação para forçar a apresentação de horário correto em produção
+    hours = window.location.hostname === "localhost" ? hours : hours - 3;
     
     if (hours > 0) setFormattedTime(`${hours} ${hours > 1 ? "horas" : "hora"}`);
     else if (minutes > 0) setFormattedTime(`${minutes} ${minutes > 1 ? "minutos" : "minuto"}`);
     else if (seconds > 0) setFormattedTime(`${seconds} ${seconds > 1 ? "segundos" : "segundo"}`);
     else setFormattedTime("pouco");
-    // console.log(seconds, minutes, hours, momentNow, momentTime);
-  }, [])
+  }, [momentTime]);
   
   useEffect(() => {
-    intervalFn()
-  }, []);
-  
-  useEffect(() => {
-    setInterval(intervalFn, 1000)
-  }, [])
+    intervalFn();
+    const interval = setInterval(intervalFn, 1000);
+    return () => clearInterval(interval);
+  }, [intervalFn]);
   
   return <>{formattedTime}</>
 }
 
 UpdateTime.propTypes = {
-  title: PropTypes.string.isRequired,
-}
+  time: PropTypes.string.isRequired,
+};
