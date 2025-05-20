@@ -6,6 +6,9 @@ export default function UpdateTime({time}) {
   const momentTime = moment(time).format('YYYY-MM-DDTHH:mm:ssZ');
   const [formattedTime, setFormattedTime] = useState("pouco");
   
+  console.log("Time: ", momentTime);
+  console.log("Now: ", moment());
+  
   const intervalFn = useCallback(() => {
     const momentNow = moment();
     
