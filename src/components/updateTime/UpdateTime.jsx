@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import {useCallback, useEffect, useState} from "react";
 
 export default function UpdateTime({time}) {
-  const momentTime = moment(time).tz("America/Sao_Paulo").format('YYYY-MM-DDTHH:mm:ssZ');
+  const momentTime = moment(time);
   const [formattedTime, setFormattedTime] = useState("pouco");
   
   console.log("Time: ", momentTime);
@@ -12,7 +12,7 @@ export default function UpdateTime({time}) {
   console.log("Now [-03:00 UTC]: ", moment.utc().tz("America/Sao_Paulo"));
   
   const intervalFn = useCallback(() => {
-    const momentNow = moment.utc().tz("America/Sao_Paulo");
+    const momentNow = moment.utc();
     
     const [
       seconds,
