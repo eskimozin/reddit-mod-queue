@@ -5,7 +5,7 @@ import Arial from "./components/arial/Arial.jsx";
 import Grid from './components/grid/Grid.jsx'
 import Card from './components/card/Card.jsx'
 import UpdateTime from './components/updateTime/UpdateTime.jsx'
-import {useCallback, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import config from "./config.js";
 import moment from "moment";
@@ -14,16 +14,19 @@ const Main = () => {
   const [vUpdateTime, setVUpdateTime] = useState("");
   const [latestRegister, setLatestRegister] = useState("");
   const [postsPending, setPostsPending] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   
   useEffect(() => {
     try {
-      // Requisitar à API no banco de dados os itens pendentes de moderação, além dos dados de último post que entrou na fila
+      // Requisitar à os dados de último post que entrou na fila
       const response = axios.post(`${config.host}/api/get-latest-register/`);
       
       response.then(res => {
         const {data} = res;
         if (data && data["rows"][0][0]["datetime_register"]) {
           const datetimeRegister = data["rows"][0][0]["datetime_register"];
+          // BUG - das duas uma, ou o horário do último registro está sendo retornado errado ou em algum lugar está fazendo uma conversão errada devido ao UTC
           setLatestRegister(datetimeRegister);
         }
         setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
@@ -111,7 +114,9 @@ export default function App() {
     
     const interval = setInterval(() => {
       setComponentMain(<></>)
-      setComponentMain(<Main/>)
+      setTimeout(() => {
+        setComponentMain(<Main/>)
+      }, 10)
     }, (5 * 60 * 1000));
     
     return () => {
