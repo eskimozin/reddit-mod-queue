@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import {useCallback, useEffect, useState} from "react";
 
 export default function UpdateTime({time}) {
-  let momentTime = moment(time).utc();
+  let momentTime = moment(time).utcOffset(3 * 60);
   const [formattedTime, setFormattedTime] = useState("pouco");
   
   console.log("Time: ", momentTime);
