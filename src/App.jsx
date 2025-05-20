@@ -26,7 +26,6 @@ const Main = () => {
         const {data} = res;
         if (data && data["rows"][0][0]["datetime_register"]) {
           const datetimeRegister = data["rows"][0][0]["datetime_register"];
-          // BUG - das duas uma, ou o horário do último registro está sendo retornado errado ou em algum lugar está fazendo uma conversão errada devido ao UTC
           setLatestRegister(datetimeRegister);
         }
         setVUpdateTime(moment().format("YYYY-MM-DDTHH:mm:ssZ"));
