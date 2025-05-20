@@ -1,16 +1,18 @@
 import PropTypes from "prop-types";
-import moment from "moment";
+import moment from 'moment-timezone';
+
 import {useCallback, useEffect, useState} from "react";
 
 export default function UpdateTime({time}) {
-  const momentTime = moment(time).format('YYYY-MM-DDTHH:mm:ssZ');
+  const momentTime = moment(time).tz("America/Sao_Paulo").format('YYYY-MM-DDTHH:mm:ssZ');
   const [formattedTime, setFormattedTime] = useState("pouco");
   
   console.log("Time: ", momentTime);
-  console.log("Now: ", moment());
+  console.log("Now: ", moment.utc());
+  console.log("Now [-03:00 UTC]: ", moment.utc().tz("America/Sao_Paulo"));
   
   const intervalFn = useCallback(() => {
-    const momentNow = moment();
+    const momentNow = moment.utc().tz("America/Sao_Paulo");
     
     const [
       seconds,
