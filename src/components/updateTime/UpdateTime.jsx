@@ -19,7 +19,7 @@ export default function UpdateTime({time}) {
     hours = window.location.hostname === "localhost" ? hours : hours - 3;
     // Se o horário for menor que 4 horas, os minutos serão exibidos e a hora não. Para corrigir isso, no ambiente de produção, é feita a divisão dos minutos por 60, resultando na quantidade de horas
     // As horas então, são apresentadas, ao invés dos minutos
-    hours = window.location.hostname === "localhost" && minutes > 60 && hours < 4 ? Math.floor(minutes / 60) : hours
+    hours = window.location.hostname !== "localhost" && minutes > 60 && hours < 4 ? Math.floor(minutes / 60) : hours
     
     console.log(seconds, minutes, hours, momentTime.diff(momentTime, "hours"), momentTime.diff(momentTime, "minutes"));
     
