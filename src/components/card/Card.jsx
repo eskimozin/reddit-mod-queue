@@ -3,7 +3,7 @@ import Spotlight from "../spotlight/Spotlight.tsx";
 import PropTypes from "prop-types";
 import {Link} from "react-router";
 
-export default function Card({title, img, subtitle, description, action, btnLabel = "Abrir no Reddit", link}) {
+export default function Card({title, img, subtitle, description, action = () => {}, btnLabel = "Abrir no Reddit", link = "https://reddit.com/r/eskimozin"}) {
   let ret = (
     <Spotlight>
       <div
