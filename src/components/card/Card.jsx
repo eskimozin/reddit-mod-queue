@@ -22,7 +22,7 @@ export default function Card({title, img, subtitle, description, action = () => 
           <Button className="inline-flex items-center gap-2 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
             (e) => {
               e.stopPropagation();
-              e.stopImmediatePropagation();
+              // e.stopImmediatePropagation();
               if (action) action()
             }
           }>
