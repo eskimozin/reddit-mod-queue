@@ -17,6 +17,9 @@ export default function UpdateTime({time}) {
     
     // Implementação para forçar a apresentação de horário correto em produção
     hours = window.location.hostname === "localhost" ? hours : hours - 3;
+    // Se o horário for menor que 4 horas, os minutos serão exibidos e a hora não. Para corrigir isso, no ambiente de produção, é feita a divisão dos minutos por 60, resultando na quantidade de horas
+    // As horas então, são apresentadas, ao invés dos minutos
+    hours = window.location.hostname === "localhost" && minutes > 60 && hours < 4 ? Math.floor(minutes / 60) : hours
     
     if (hours > 0) setFormattedTime(`${hours} ${hours > 1 ? "horas" : "hora"}`);
     else if (minutes > 0) setFormattedTime(`${minutes} ${minutes > 1 ? "minutos" : "minuto"}`);
