@@ -1,7 +1,8 @@
+import {useEffect, useState, Suspense, lazy} from "react";
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 
-import {useEffect, useState} from "react";
-import Main from "./components/main/Main.jsx";
+import Loading from "./components/loading/Loading.jsx";
+const Main = lazy(() => import("./components/main/Main.jsx"));
 
 export default function App() {
   const [componentMain, setComponentMain] = useState(<></>);
@@ -23,9 +24,11 @@ export default function App() {
   
   return (
     <BrowserRouter>
+      <Suspense fallback={<Loading/>}>
       <Routes index element={componentMain}>
         <Route path="/reddit-mod-queue/" element={componentMain}/>
       </Routes>
+      </Suspense>
     </BrowserRouter>
   )
 }
