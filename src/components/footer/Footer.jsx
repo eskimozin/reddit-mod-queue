@@ -15,7 +15,7 @@ export default function Footer() {
           <span>{moment().utc().format("YYYY")} - </span>
           <span>Fila de moderação do r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span>
         </div>
-        <a href={config.links.developer} className={"text-decoration-none fw-light"} style={{...styles, color: "inherit"}}>Feito com 💖 pelo {config["ui-infos"]["developer-name"]}.</a>
+        <a href={config.links.developer} className={"text-decoration-none fw-light focus-headless"} style={{...styles, color: "inherit"}}>Feito com 💖 pelo {config["ui-infos"]["developer-name"]}.</a>
       </p>
     </div>
   )
