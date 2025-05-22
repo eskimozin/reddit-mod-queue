@@ -1,9 +1,10 @@
 import {Button} from '@headlessui/react'
-import Spotlight from "../spotlight/Spotlight.tsx";
+import Spotlight from "../ui/spotlight/Spotlight.tsx";
 import PropTypes from "prop-types";
 import {Link} from "react-router";
+import config from "../../config.js";
 
-export default function Card({title, img, subtitle, description, action = () => {}, btnLabel = "Abrir no Reddit", link = "https://reddit.com/r/eskimozin"}) {
+export default function Card({title, img, subtitle, description, action = () => {}, btnLabel = "Abrir no Reddit", link = config.links.subreddit}) {
   let ret = (
     <Spotlight>
       <div
@@ -19,7 +20,7 @@ export default function Card({title, img, subtitle, description, action = () => 
           <h2 className="block font-semibold text-xl">{title}</h2>
           <p className="text-gray-400 font-semibold mt-1 mb-0">{subtitle}</p>
           <p className="mt-3 mb-4 pb-1">{description}</p>
-          <Button className="inline-flex items-center gap-2 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
+          <Button className="inline-flex items-center gap-1 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
             (e) => {
               e.stopPropagation();
               // e.stopImmediatePropagation();
@@ -38,7 +39,7 @@ export default function Card({title, img, subtitle, description, action = () => 
   
   if (!link) return ret;
   return (
-    <Link to={link} rel={"noopener noreferrer"} target={"_blank"} className={"focus-headless"}>
+    <Link to={link} {...config["default-props"]["a"]}>
       <>{ret}</>
     </Link>
   );

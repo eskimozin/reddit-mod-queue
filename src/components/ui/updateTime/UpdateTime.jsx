@@ -25,7 +25,7 @@ export default function UpdateTime({time}) {
     // As horas então, são apresentadas, ao invés dos minutos
     hours = window.location.hostname !== "localhost" && minutes >= 60 && hours < 4 ? Math.floor(minutes / 60) : hours
     
-    console.log(seconds, minutes, hours, momentTime.diff(momentTime, "hours"), momentTime.diff(momentTime, "minutes"));
+    // console.log(seconds, minutes, hours, momentTime.diff(momentTime, "hours"), momentTime.diff(momentTime, "minutes"));
     
     if (hours > 0) setFormattedTime(`${hours} ${hours > 1 ? "horas" : "hora"}`);
     else if (minutes > 0) setFormattedTime(`${minutes} ${minutes > 1 ? "minutos" : "minuto"}`);
