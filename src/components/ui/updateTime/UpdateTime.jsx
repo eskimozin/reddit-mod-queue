@@ -1,15 +1,37 @@
 import PropTypes from "prop-types";
-import moment from 'moment-timezone';
+import moment from 'moment';
 import {useCallback, useEffect, useState} from "react";
 
 export default function UpdateTime({time}) {
   // Força a interpretação do `time` como UTC-3 (ex: São Paulo)
-  const momentTime = moment.tz(time, 'America/Sao_Paulo');
+  function toSaoPauloISOString(input) {
+    const date = new Date(input);
+    const formatter = new Intl.DateTimeFormat('en-CA', {
+      timeZone: 'America/Sao_Paulo',
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: false
+    });
+    
+    const parts = formatter.formatToParts(date);
+    const get = (type) => parts.find(p => p.type === type)?.value;
+    
+    // Retorna uma string ISO sem fuso explícito, mas com os dados ajustados
+    return `${get('year')}-${get('month')}-${get('day')}T${get('hour')}:${get('minute')}:${get('second')}`;
+  }
+  
+  
+  console.log(toSaoPauloISOString(new Date(time)))
+  const momentTime = moment(toSaoPauloISOString(new Date(time)));
   
   const [formattedTime, setFormattedTime] = useState("pouco");
   
   const intervalFn = useCallback(() => {
-    const momentNow = moment.tz('America/Sao_Paulo');
+    const momentNow = moment(toSaoPauloISOString(new Date()));
     
     const seconds = momentNow.diff(momentTime, "seconds");
     let minutes = momentNow.diff(momentTime, "minutes");
