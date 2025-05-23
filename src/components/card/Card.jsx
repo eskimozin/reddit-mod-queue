@@ -17,13 +17,14 @@ export default function Card({title, img, subtitle, description, action = () => 
           ) : ""
         }
         <div className={"relative z-20 p-4 pt-5"}>
-          <h2 className="block font-semibold text-xl">{title}</h2>
-          <p className="text-gray-400 font-semibold mt-1 mb-0">{subtitle}</p>
+          <h2 className="block font-semibold text-xl line-clamp-2 text-ellipsis">{title || "Título não retornado"}</h2>
+          <p className="text-gray-400 font-semibold mt-1 mb-0 line-clamp-2 text-ellipsis">{subtitle  || "Usuário do post não retornado"}</p>
           <p className="mt-3 mb-4 pb-1">{description}</p>
           <Button className="inline-flex items-center gap-1 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
             (e) => {
               e.stopPropagation();
-              // e.stopImmediatePropagation();
+              e.preventDefault();
+              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
               if (action) action()
             }
           }>
