@@ -8,6 +8,7 @@ import Card from "../card/Card.jsx";
 import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
 import {Button} from "@headlessui/react";
+import ModerateAllPosts from "./ModerateAllPosts.jsx";
 
 const HeaderMain = () => {
   const {vUpdateTime, latestRegister} = useContext(ThemeProvider);
@@ -61,22 +62,14 @@ const ContentMain = () => {
   );
 }
 
-const aditionalActions = () => {
+const AditionalActions = () => {
   const {postsPending} = useContext(ThemeProvider);
   
   return (
     <>
       {
         postsPending && postsPending.length > 1 && (
-          <Button className="inline-flex items-center gap-1 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
-            (e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-              console.log(e.currentTarget);
-            }
-          }>
-          </Button>
+          <ModerateAllPosts/>
         )
       }
     </>
@@ -119,4 +112,4 @@ const FeedbackPostsMain = () => {
   );
 }
 
-export {HeaderMain, ContentMain, FeedbackPostsMain};
+export {HeaderMain, ContentMain, AditionalActions, FeedbackPostsMain};

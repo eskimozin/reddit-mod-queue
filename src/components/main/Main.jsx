@@ -1,4 +1,4 @@
-import {HeaderMain, ContentMain, FeedbackPostsMain} from "./ComponentsMain.jsx";
+import {HeaderMain, ContentMain, FeedbackPostsMain, AditionalActions} from "./ComponentsMain.jsx";
 import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
 
 import {ContextMain} from "./ContextMain.jsx";
@@ -16,6 +16,7 @@ export default function Main() {
               <HeaderMain/>
               <ContentMain/>
             </AnimatedComponents>
+            <AditionalActions/>
             <FeedbackPostsMain/>
           </main>
           <Footer/>
