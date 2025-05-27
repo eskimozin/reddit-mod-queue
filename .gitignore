@@ -25,3 +25,7 @@ dist-ssr
 
 # Build analytics
 stats.html
+
+# Enviroments
+.env
+*.*.env

@@ -1,11 +1,61 @@
 import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {ChevronDownIcon} from '@heroicons/react/16/solid'
 
+import {Button, Dialog, DialogPanel, DialogTitle} from '@headlessui/react'
+import React, {useRef, useState} from 'react'
+import CodeInput from "../code-input/CodeInput.js";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
+import config from "../../config.js";
+import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
+
 export default function ModerateAllPosts() {
+  // let [isOpen, setIsOpen] = useState(false)
+  let [isOpen, setIsOpen] = useState(true);
+  const captchaRef = useRef(null);
+  const [token, setToken] = useState(null);
+  const [message, setMessage] = useState('');
+  
+  const onVerify = (token) => {
+    setToken(token);
+  };
+  
+  const onSubmit = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+    
+    if (!token) {
+      setMessage('Por favor, complete o captcha antes de enviar.');
+      return;
+    }
+    
+    // Enviar o token para o backend para validação
+    try {
+      const res = await fetch(`${config.hCaptchaHost}/api/verify-captcha`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      });
+      
+      const data = await res.json();
+      
+      if (data.success) {
+        // Captcha validado com sucesso!
+        // Tem que ir na API e verificar se o código digitado está correto
+      } else {
+        setMessage('Falha na validação do captcha, tente novamente.');
+        captchaRef.current.resetCaptcha();
+        setToken(null);
+      }
+    } catch (error) {
+      setMessage('Erro ao validar captcha.');
+    }
+  };
+  
   return (
     <div>
       <Menu>
-        <MenuButton className="inline-flex items-center gap-2 rounded-md bg-gray-800 px-3 py-1.5  text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
+        <MenuButton className="mt-8 inline-flex items-center focus-headless gap-2 rounded bg-gray-800 px-3 py-2  text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
           Moderar todos de uma vez
           <ChevronDownIcon className="size-4 fill-white/60"/>
         </MenuButton>
@@ -20,8 +70,16 @@ export default function ModerateAllPosts() {
             ].map((i, index) => {
               
               return (
-                <MenuItem key={index} onClick={i[1]}>
-                  <button className="group flex w-full items-center gap-2 rounded px-3 py-1.5 hover:bg-white/10 data-focus:bg-white/10 focus:bg-white/10">
+                <MenuItem key={index} onClick={(e) => {
+                  setIsOpen(true);
+                  
+                  // Vai na API e solicita a criação de uma ação de moderação. A API vai criar o código, registrar e enviar via webhook
+                  //  BUG - apenas quando tiver retornado o OK da API que o modal deve aparecer para preencher com o código. Enquanto isso, dar feedback para o usuário do que está sendo feito
+                  
+                  console.log(i[1]);
+                  // i[1]();
+                }}>
+                  <button className="focus-headless group flex w-full items-center gap-2 rounded px-3 py-1.5 hover:bg-white/10 data-focus:bg-white/10 focus:bg-white/10">
                     {i[0]}
                   </button>
                 </MenuItem>
@@ -30,6 +88,56 @@ export default function ModerateAllPosts() {
           }
         </MenuItems>
       </Menu>
+      
+      <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={close} __demoMode>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
+          <div className="flex min-h-full items-center justify-center p-4">
+            <DialogPanel
+              transition
+              className="w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
+            >
+              <DialogTitle as="h3" className="font-semibold text-[1.55rem]">
+                Confirmar ação
+              </DialogTitle>
+              <p className="mt-2 text-white/70">
+                Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação.
+              </p>
+              
+              <form action={"#"} method={"POST"}  onSubmit={onSubmit}>
+                <CodeInput/>
+                
+                <div className={"mt-5 flex items-center justify-center"}>
+                  <HCaptcha
+                    sitekey={import.meta.env.VITE_SITE_KEY}
+                    onVerify={onVerify}
+                    ref={captchaRef}
+                  />
+                </div>
+                
+                {
+                  message && (
+                    <AnimatedComponents>
+                      <div className="flex flex-wrap gap-2 items-center text-center p-3 bg-orange-500/5 border border-orange-300/25 text-orange-300 mt-4 rounded">
+                        <p className={"text-balance"}>{message}</p>
+                      </div>
+                    </AnimatedComponents>
+                  )
+                }
+                
+                <div className="mt-4 flex flex-wrap gap-2 items-center justify-center">
+                  <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => setIsOpen(false)}>
+                    Cancelar
+                  </Button>
+                  
+                  <Button type="submit" className="inline-flex items-center gap-2 rounded-md bg-orange-600 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless">
+                    Confirmar
+                  </Button>
+                </div>
+              </form>
+            </DialogPanel>
+          </div>
+        </div>
+      </Dialog>
     </div>
   )
 }
