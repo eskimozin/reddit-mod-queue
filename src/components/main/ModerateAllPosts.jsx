@@ -14,6 +14,7 @@ export default function ModerateAllPosts() {
   const captchaRef = useRef(null);
   const [token, setToken] = useState(null);
   const [message, setMessage] = useState('');
+  const [action, setAction] = useState('');
   
   const onVerify = (token) => {
     setToken(token);
@@ -33,8 +34,8 @@ export default function ModerateAllPosts() {
     try {
       const res = await fetch(`${config.hCaptchaHost}/api/verify-captcha`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ token }),
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({token}),
       });
       
       const data = await res.json();
@@ -68,10 +69,10 @@ export default function ModerateAllPosts() {
               ["Reprovar", (() => {
               })]
             ].map((i, index) => {
-              
               return (
                 <MenuItem key={index} onClick={(e) => {
                   setIsOpen(true);
+                  setAction(i[0]);
                   
                   // Vai na API e solicita a criação de uma ação de moderação. A API vai criar o código, registrar e enviar via webhook
                   //  BUG - apenas quando tiver retornado o OK da API que o modal deve aparecer para preencher com o código. Enquanto isso, dar feedback para o usuário do que está sendo feito
@@ -89,21 +90,22 @@ export default function ModerateAllPosts() {
         </MenuItems>
       </Menu>
       
-      <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={close} __demoMode>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
+      <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClick={(e) => e.preventDefault()} onClose={close}>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md" onClick={(e) => e.preventDefault()}>
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
+              onClick={(e) => e.preventDefault()}
               transition
               className="w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
             >
               <DialogTitle as="h3" className="font-semibold text-[1.55rem]">
-                Confirmar ação
+                Confirmar {["aprovar", "reprovar"].includes(action.toLowerCase()) ? action.toLowerCase() === "aprovar" ? "aprovação dos posts" : "reprovação dos posts" : "ação"}
               </DialogTitle>
               <p className="mt-2 text-white/70">
                 Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação.
               </p>
               
-              <form action={"#"} method={"POST"}  onSubmit={onSubmit}>
+              <form action={"#"} method={"POST"} onSubmit={onSubmit}>
                 <CodeInput/>
                 
                 <div className={"mt-5 flex items-center justify-center"}>
@@ -125,7 +127,10 @@ export default function ModerateAllPosts() {
                 }
                 
                 <div className="mt-4 flex flex-wrap gap-2 items-center justify-center">
-                  <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => setIsOpen(false)}>
+                  <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => {
+                    e.stopPropagation();
+                    setIsOpen(false);
+                  }}>
                     Cancelar
                   </Button>
                   
