@@ -17,7 +17,7 @@ const HeaderMain = () => {
       <img src={config["ui-infos"]["header-img"]["url"]} alt={config["ui-infos"]["header-img"]["alt"]} className={"rounded-full w-[50px] h-[50px] object-cover"}/>
       <div className={"block"}>
         <h1 className={"text-balance font-bold text-3xl"}>Fila de moderação do <span className={"text-orange-600"}>r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span></h1>
-        <p className={"mb-0 mt-1 text-gray-400 text-balance max-w-[600px]"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila de moderação há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação da fila de moderação é feita a cada 5 minutos.</p>
+        <p className={"mb-0 mt-1 text-gray-400 text-balance max-w-[600px]"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila de moderação há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação da fila é feita a cada 5 minutos.</p>
       </div>
     </hgroup>
   )
