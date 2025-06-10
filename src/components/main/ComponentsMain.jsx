@@ -7,7 +7,6 @@ import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
 import Card from "../card/Card.jsx";
 import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
-import {Button} from "@headlessui/react";
 import ModerateAllPosts from "./ModerateAllPosts.jsx";
 
 const HeaderMain = () => {
@@ -38,6 +37,11 @@ const ContentMain = () => {
               description={"Geralmente isso é rápido mas pode ser que demore um pouco."}
               link={config.links.subreddit}
               btnLabel={"Ir pro subreddit"}
+              actions={((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.subreddit, "_blank", "noreferrer noopener")
+              })}
             />
           ) : postsPending ? postsPending.map((post, index) => {
             const props = {
@@ -52,7 +56,17 @@ const ContentMain = () => {
             }
             return <Card {...props} key={index}/>
           }) : !error ? (
-            <Card title={"Não há nada por aqui..."} subtitle={"Tudo certo!"} description={"Sem posts para a moderação avaliar. Pegue uma bebida e aguarde."} btnLabel={"Ir pro subreddit"}/>
+            <Card
+              title={"Não há nada por aqui..."}
+              subtitle={"Tudo certo!"}
+              description={"Sem posts para a moderação avaliar. Pegue uma bebida e aguarde."}
+              btnLabel={"Ir pro subreddit"}
+              actions={((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.subreddit, "_blank", "noreferrer noopener")
+              })}
+            />
           ) : (
             <Card title={"Ocorreu um erro: " + error} subtitle={"Algo não saiu como deveria..."} description={""} link={config.links.report} btnLabel={"Reportar"}/>
           )
