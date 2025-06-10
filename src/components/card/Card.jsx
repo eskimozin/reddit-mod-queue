@@ -25,8 +25,8 @@ export default function Card({title, img, subtitle, description, action, btnLabe
               e.stopPropagation();
               e.preventDefault();
               if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-              if (action) action()
-              else window.open(config.links.subreddit, "_blank", "noreferrer noopener");
+              if (action) action();
+              else window.open(link, "_blank", "noreferrer noopener");
             }
           }>
             {btnLabel}

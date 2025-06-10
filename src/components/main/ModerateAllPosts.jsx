@@ -53,6 +53,8 @@ export default function ModerateAllPosts() {
     }
   };
   
+  return null;
+  
   return (
     <div>
       <Menu>

@@ -68,7 +68,18 @@ const ContentMain = () => {
               })}
             />
           ) : (
-            <Card title={"Ocorreu um erro: " + error} subtitle={"Algo não saiu como deveria..."} description={""} link={config.links.report} btnLabel={"Reportar"}/>
+            <Card
+              title={"Ocorreu um erro: " + error}
+              subtitle={"Algo não saiu como deveria..."}
+              description={""}
+              link={config.links.report}
+              actions={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.report, "_blank", "noreferrer noopener")
+              }}
+              btnLabel={"Reportar"}
+            />
           )
         }
       </AnimatedComponents>
