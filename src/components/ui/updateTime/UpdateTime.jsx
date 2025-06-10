@@ -25,7 +25,7 @@ export default function UpdateTime({time}) {
   }
   
   
-  console.log(toSaoPauloISOString(new Date(time)))
+  // console.log(toSaoPauloISOString(new Date(time)))
   const momentTime = moment(toSaoPauloISOString(new Date(time)));
   
   const [formattedTime, setFormattedTime] = useState("pouco");

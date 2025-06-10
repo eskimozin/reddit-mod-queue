@@ -7,7 +7,7 @@ import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
 import Card from "../card/Card.jsx";
 import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
-import {Button} from "@headlessui/react";
+import ModerateAllPosts from "./ModerateAllPosts.jsx";
 
 const HeaderMain = () => {
   const {vUpdateTime, latestRegister} = useContext(ThemeProvider);
@@ -37,6 +37,11 @@ const ContentMain = () => {
               description={"Geralmente isso é rápido mas pode ser que demore um pouco."}
               link={config.links.subreddit}
               btnLabel={"Ir pro subreddit"}
+              actions={((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.subreddit, "_blank", "noreferrer noopener")
+              })}
             />
           ) : postsPending ? postsPending.map((post, index) => {
             const props = {
@@ -51,9 +56,30 @@ const ContentMain = () => {
             }
             return <Card {...props} key={index}/>
           }) : !error ? (
-            <Card title={"Não há nada por aqui..."} subtitle={"Tudo certo!"} description={"Sem posts para a moderação avaliar. Pegue uma bebida e aguarde."} btnLabel={"Ir pro subreddit"}/>
+            <Card
+              title={"Não há nada por aqui..."}
+              subtitle={"Tudo certo!"}
+              description={"Sem posts para a moderação avaliar. Pegue uma bebida e aguarde."}
+              btnLabel={"Ir pro subreddit"}
+              actions={((e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.subreddit, "_blank", "noreferrer noopener")
+              })}
+            />
           ) : (
-            <Card title={"Ocorreu um erro: " + error} subtitle={"Algo não saiu como deveria..."} description={""} link={config.links.report} btnLabel={"Reportar"}/>
+            <Card
+              title={"Ocorreu um erro: " + error}
+              subtitle={"Algo não saiu como deveria..."}
+              description={""}
+              link={config.links.report}
+              actions={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.open(config.links.report, "_blank", "noreferrer noopener")
+              }}
+              btnLabel={"Reportar"}
+            />
           )
         }
       </AnimatedComponents>
@@ -61,22 +87,14 @@ const ContentMain = () => {
   );
 }
 
-const aditionalActions = () => {
+const AditionalActions = () => {
   const {postsPending} = useContext(ThemeProvider);
   
   return (
     <>
       {
         postsPending && postsPending.length > 1 && (
-          <Button className="inline-flex items-center gap-1 rounded-[5px] bg-orange-600 border-orange-700 focus:bg-orange-700 hover:bg-orange-700 px-3 py-2 text-white/95  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless mb-1 transition-colors" onClick={
-            (e) => {
-              e.stopPropagation();
-              e.preventDefault();
-              if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-              console.log(e.currentTarget);
-            }
-          }>
-          </Button>
+          <ModerateAllPosts/>
         )
       }
     </>
@@ -119,4 +137,4 @@ const FeedbackPostsMain = () => {
   );
 }
 
-export {HeaderMain, ContentMain, FeedbackPostsMain};
+export {HeaderMain, ContentMain, AditionalActions, FeedbackPostsMain};

@@ -1,0 +1,2 @@
+- Refatorar botões em um componente e reaproveitá-los
+- Resolver problema do modal dialog do headless que quando se clica fora do conteúdo dele, onde tem o backdrop ele fecha a página

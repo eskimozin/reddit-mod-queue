@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import {Link} from "react-router";
 import config from "../../config.js";
 
-export default function Card({title, img, subtitle, description, action = () => {}, btnLabel = "Abrir no Reddit", link = config.links.subreddit}) {
+export default function Card({title, img, subtitle, description, action, btnLabel = "Abrir no Reddit", link = config.links.subreddit}) {
   let ret = (
     <Spotlight>
       <div
@@ -25,7 +25,8 @@ export default function Card({title, img, subtitle, description, action = () => 
               e.stopPropagation();
               e.preventDefault();
               if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-              if (action) action()
+              if (action) action();
+              else window.open(link, "_blank", "noreferrer noopener");
             }
           }>
             {btnLabel}

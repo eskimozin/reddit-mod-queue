@@ -8,6 +8,7 @@ export default {
     "developer-name": "Gabriel",
   },
   "host": window.location.hostname === "localhost" ? "http://localhost:8001" : "https://gabriers.up.railway.app",
+  "hCaptchaHost": window.location.hostname === "localhost" ? "http://localhost:8010" : "",
   "links": {
     "report": "https://github.com/eskimozin/reddit-mod-queue/issues/new",
     "subreddit": "https://reddit.com/r/eskimozin",
