@@ -2,25 +2,42 @@ import {Menu, MenuButton, MenuItem, MenuItems} from '@headlessui/react'
 import {ChevronDownIcon} from '@heroicons/react/16/solid'
 
 import {Button, Dialog, DialogPanel, DialogTitle} from '@headlessui/react'
-import React, {useRef, useState} from 'react'
+import React, {useEffect, useRef, useState} from 'react'
 import CodeInput from "../code-input/CodeInput.js";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import config from "../../config.js";
 import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
 
+const setFeebackMessage = (e, val, setter) => {
+  const action = [
+    {e: "code", func: val.filter(v => v.trim().length === 0).length === 0, ok: "", incomplete: 'Preencha todos os números do código'}
+  ]
+  
+  const ref = action.filter(a => a.e === e).at(0);
+  
+  if (!ref.func) setter(ref.incomplete)
+  else setter(ref.ok)
+}
+
 export default function ModerateAllPosts() {
-  // let [isOpen, setIsOpen] = useState(false)
+  const inputLength = 6;
+  const [values, setValues] = useState(Array(inputLength).fill(""));
+  
   let [isOpen, setIsOpen] = useState(true);
   const captchaRef = useRef(null);
   const [token, setToken] = useState(null);
   const [message, setMessage] = useState('');
   const [action, setAction] = useState('');
   
+  useEffect(() => {
+    setFeebackMessage("code", values, setMessage);
+  }, [values]);
+  
   const onVerify = (token) => {
     setToken(token);
   };
   
-  const onSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     e.stopPropagation();
     if (e.stopImmediatePropagation) e.stopImmediatePropagation();
@@ -43,6 +60,7 @@ export default function ModerateAllPosts() {
       if (data.success) {
         // Captcha validado com sucesso!
         // Tem que ir na API e verificar se o código digitado está correto
+        console.log("OK!")
       } else {
         setMessage('Falha na validação do captcha, tente novamente.');
         captchaRef.current.resetCaptcha();
@@ -52,8 +70,6 @@ export default function ModerateAllPosts() {
       setMessage('Erro ao validar captcha.');
     }
   };
-  
-  return null;
   
   return (
     <div>
@@ -77,7 +93,7 @@ export default function ModerateAllPosts() {
                   setAction(i[0]);
                   
                   // Vai na API e solicita a criação de uma ação de moderação. A API vai criar o código, registrar e enviar via webhook
-                  //  BUG - apenas quando tiver retornado o OK da API que o modal deve aparecer para preencher com o código. Enquanto isso, dar feedback para o usuário do que está sendo feito
+                  // TODO - apenas quando tiver retornado o OK da API que o modal deve aparecer para preencher com o código. Enquanto isso, dar feedback para o usuário do que está sendo feito
                   
                   console.log(i[1]);
                   // i[1]();
@@ -92,11 +108,10 @@ export default function ModerateAllPosts() {
         </MenuItems>
       </Menu>
       
-      <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClick={(e) => e.preventDefault()} onClose={close}>
-        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md" onClick={(e) => e.preventDefault()}>
+      <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={close}>
+        <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
           <div className="flex min-h-full items-center justify-center p-4">
             <DialogPanel
-              onClick={(e) => e.preventDefault()}
               transition
               className="w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
             >
@@ -107,8 +122,8 @@ export default function ModerateAllPosts() {
                 Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação.
               </p>
               
-              <form action={"#"} method={"POST"} onSubmit={onSubmit}>
-                <CodeInput/>
+              <form action={"#"} method={"POST"} onSubmit={handleSubmit}>
+                <CodeInput inputLength={6} values={values} setValues={setValues}/>
                 
                 <div className={"mt-5 flex items-center justify-center"}>
                   <HCaptcha
