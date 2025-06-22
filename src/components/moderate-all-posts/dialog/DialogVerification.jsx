@@ -2,31 +2,32 @@ import {Button, Dialog, DialogPanel, DialogTitle} from "@headlessui/react";
 import CodeInput from "../../code-input/CodeInput.tsx";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import AnimatedComponents from "../../ui/animatedComponent/AnimatedComponents.jsx";
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ThemeProvider} from "../ModerateAllPostsContext.jsx";
 import config from "../../../config.js";
 
 export default function DialogVerification() {
   const [token, setToken] = useState("");
+  const [message, setMessage] = useState('');
   
   const {
+    isLoading,
     setIsLoading,
     values,
     setValues,
     isOpen,
     setIsOpen,
     captchaRef2,
-    message,
-    setMessage,
     action,
     actionTxt,
     credentials,
     setAllOk,
     setFeedbackMessage,
+    setIdVerificationRequest,
   } = useContext(ThemeProvider)
   
   useEffect(() => {
-    console.log("Dialog Verification", " ", "Rendered: ", new Date());
+    // console.log("Dialog Verification", " ", "Rendered: ", new Date());
     captchaRef2?.current?.resetCaptcha();
   }, [])
   
@@ -67,6 +68,7 @@ export default function DialogVerification() {
         console.log("OK!");
         setMessage("");
         setAllOk(true);
+        setIdVerificationRequest(data.id);
         captchaRef2.current.resetCaptcha();
       } else {
         setMessage(data.message || JSON.stringify(data));
@@ -80,7 +82,7 @@ export default function DialogVerification() {
   };
   
   return (
-    <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={close}>
+    <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
         <div className="flex min-h-full items-center justify-center p-4">
           <DialogPanel
@@ -91,7 +93,7 @@ export default function DialogVerification() {
               Confirmar {["aprovar", "reprovar"].includes(actionTxt.toLowerCase()) ? actionTxt.toLowerCase() === "aprovar" ? "aprovação dos posts" : "reprovação dos posts" : "ação"}
             </DialogTitle>
             <p className="mt-2 text-white/70">
-              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação.
+              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação. Ele é válido até {}
             </p>
             
             <form action={"#"} method={"POST"} onSubmit={handleSubmit}>
@@ -115,7 +117,7 @@ export default function DialogVerification() {
                 )
               }
               
-              <div className="mt-4 flex flex-wrap gap-2 items-center justify-center">
+              <div className={"mt-4 flex flex-wrap gap-2 items-center justify-center " + (isLoading ? "pointer-events-none opacity-55 cursor-not-allowed" : "")}>
                 <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(false);

@@ -1,13 +1,15 @@
+import React, {useContext} from "react";
 import {Menu, MenuButton, MenuItem, MenuItems} from "@headlessui/react";
 import {ChevronDownIcon} from "@heroicons/react/16/solid/index.js";
-import React, {useContext} from "react";
-import {ThemeProvider} from "./ModerateAllPostsContext.jsx";
-import DialogConfirm from "./dialog/DialogConfirm.jsx";
+import {ThemeProvider as ThemeProviderModerateAll} from "./ModerateAllPostsContext.jsx";
+import {ThemeProvider as ThemeProviderApp} from "../../App.jsx";
+
 import DialogVerification from "./dialog/DialogVerification.jsx";
+import DialogConfirm from "./dialog/DialogConfirm.jsx";
 import DialogVerifyRequest from "./dialog/DialogVerifyRequest.jsx";
 
 export default function ModerateAllPostsContent() {
-  const {
+  let {
     codeSend,
     setIsOpen,
     setAction,
@@ -17,7 +19,11 @@ export default function ModerateAllPostsContent() {
     setAllOk,
     clearValues,
     setMessage
-  } = useContext(ThemeProvider);
+  } = useContext(ThemeProviderModerateAll);
+  
+  let {
+    setStopAppInterval
+  } = useContext(ThemeProviderApp);
   
   const items = [
     [1, "Aprovar", (() => {
@@ -28,6 +34,10 @@ export default function ModerateAllPostsContent() {
   
   return (
     <div>
+      {!codeSend && !allOk && <DialogConfirm/>}
+      {codeSend && !allOk && <DialogVerification/>}
+      {codeSend && allOk && <DialogVerifyRequest/>}
+      
       <Menu>
         <MenuButton className="mt-8 inline-flex items-center focus-headless gap-2 rounded bg-gray-800 px-3 py-2  text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
           Moderar todos de uma vez
@@ -43,11 +53,11 @@ export default function ModerateAllPostsContent() {
                   setAllOk(false);
                   setCodeSend(false);
                   setIsOpen(true);
-                  console.log(i[0])
                   setAction(i[0]);
                   setActionTxt(i[1]);
                   clearValues();
                   setMessage("");
+                  setStopAppInterval(true)
                 }}>
                   <button className="focus-headless group flex w-full items-center gap-2 rounded px-3 py-1.5 hover:bg-white/10 data-focus:bg-white/10 focus:bg-white/10">
                     {i[1]}
@@ -58,11 +68,6 @@ export default function ModerateAllPostsContent() {
           }
         </MenuItems>
       </Menu>
-      
-      {!codeSend && <DialogConfirm/>}
-      {codeSend && !allOk && <DialogVerification/>}
-      {allOk && <DialogVerifyRequest/>}
-    
     </div>
   )
 }

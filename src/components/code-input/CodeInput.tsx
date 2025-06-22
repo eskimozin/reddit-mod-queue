@@ -32,17 +32,17 @@ const CodeInput = ({inputLength, values, setValues}: { inputLength: number, valu
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     const pasted = e.clipboardData.getData("text").toUpperCase();
-    if (!/^[A-Z0-9]{6}$/.test(pasted)) return;
+    // if (!/^[A-Z0-9]{6}$/.test(pasted)) return;
+    if (!/^[0-9]{6}$/.test(pasted)) return;
 
     const newValues = pasted.split("");
     setValues(newValues);
     newValues.forEach((char, i) => {
-      if (inputsRef.current[i]) {
-        inputsRef.current[i]!.value = char;
-      }
+      console.log(char, inputsRef.current[i]);
+        inputsRef.current[i].value = char;
     });
 
-    inputsRef.current[5]?.focus();
+    inputsRef.current[0].closest("form").querySelector("button[type=submit]")?.focus();
   };
 
   return (

@@ -1,28 +1,44 @@
-import {createContext, useCallback, useRef, useState} from "react";
 import PropTypes from "prop-types";
+import {createContext, useCallback, useContext, useRef, useState} from "react";
+import {ThemeProvider as ThemeProviderApp} from "../../App.jsx";
 
 const ThemeProvider = createContext(null);
 
 function ModerateAllPostsContext({children}) {
+  let {
+    setStopAppInterval
+  } = useContext(ThemeProviderApp);
+  
   const inputLength = 6;
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [values, setValues] = useState(Array(inputLength).fill(""));
   const [codeSend, setCodeSend] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setVIsOpen] = useState(false);
   const captchaRef1 = useRef(null);
   const captchaRef2 = useRef(null);
   const [message, setMessage] = useState('');
   const [action, setAction] = useState('');
   const [actionTxt, setActionTxt] = useState('');
   const [credentials, setCredentials] = useState({});
+  const [idVerificationRequest, setIdVerificationRequest] = useState();
   const [allOk, setAllOk] = useState(false);
+  
+  // const [idVerificationRequest, setIdVerificationRequest] = useState(20);
+  // const [allOk, setAllOk] = useState(true);
+  
+  const setIsOpen = useCallback((bool) => {
+    setVIsOpen(bool);
+    setStopAppInterval(false);
+  }, [])
   
   const clearValues = useCallback(() => {
     setValues(Array(inputLength).fill(""))
   }, [])
   
   const setFeedbackMessage = useCallback((e, val, setter) => {
+    console.log(val)
+    
     const action = [
       {e: "code", func: val.filter(v => v.trim().length === 0).length === 0, ok: "", incomplete: 'Preencha todos os números do código'}
     ]
@@ -60,6 +76,8 @@ function ModerateAllPostsContext({children}) {
     setAllOk,
     setFeedbackMessage,
     clearValues,
+    idVerificationRequest,
+    setIdVerificationRequest,
   }
   
   return (

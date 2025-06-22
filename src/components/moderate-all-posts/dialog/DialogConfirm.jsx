@@ -1,22 +1,22 @@
 import {Button, Dialog, DialogPanel, DialogTitle} from "@headlessui/react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import AnimatedComponents from "../../ui/animatedComponent/AnimatedComponents.jsx";
-import React, {useCallback, useContext, useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import {ThemeProvider} from "../ModerateAllPostsContext.jsx";
 import config from "../../../config.js";
 
 export default function DialogConfirm() {
   const [token, setToken] = useState("");
+  const [message, setMessage] = useState('');
   
   const {
     setCodeSend,
     isOpen,
     setIsOpen,
     captchaRef1,
-    message,
-    setMessage,
     action,
     setCredentials,
+    isLoading,
     setIsLoading,
   } = useContext(ThemeProvider)
   
@@ -68,14 +68,17 @@ export default function DialogConfirm() {
     }
   };
   
+  const preventClose = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
+  }
+  
   return (
-    <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={close}>
+    <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
         <div className="flex min-h-full items-center justify-center p-4">
-          <DialogPanel
-            transition
-            className="w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0"
-          >
+          <DialogPanel transition className="w-full max-w-md rounded-xl bg-white/10 p-6 backdrop-blur-2xl duration-300 ease-out data-closed:transform-[scale(95%)] data-closed:opacity-0">
             <DialogTitle as="h3" className="font-semibold text-[1.55rem]">
               Preencha o Captcha
             </DialogTitle>
@@ -105,7 +108,8 @@ export default function DialogConfirm() {
                 )
               }
               
-              <div className="mt-4 flex flex-wrap gap-2 items-center justify-center">
+              {/*<div className={"mt-4 flex flex-wrap gap-2 items-center justify-center " + (isLoading ? "pointer-events-none opacity-55 cursor-not-allowed" : "")}>*/}
+              <div className={"mt-4 flex flex-wrap gap-2 items-center justify-center "}>
                 <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(false);
