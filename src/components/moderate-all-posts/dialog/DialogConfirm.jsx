@@ -38,7 +38,7 @@ export default function DialogConfirm() {
     try {
       setIsLoading(true);
       
-      const res = await fetch(`${config.hCaptchaHost}/api/new-action`, {
+      const res = await fetch(`${config.modQueueServer}/api/new-action`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
@@ -67,12 +67,6 @@ export default function DialogConfirm() {
       setIsLoading(false);
     }
   };
-  
-  const preventClose = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    if (e.stopImmediatePropagation) e.stopImmediatePropagation();
-  }
   
   return (
     <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={() => setIsOpen(false)}>
@@ -108,8 +102,7 @@ export default function DialogConfirm() {
                 )
               }
               
-              {/*<div className={"mt-4 flex flex-wrap gap-2 items-center justify-center " + (isLoading ? "pointer-events-none opacity-55 cursor-not-allowed" : "")}>*/}
-              <div className={"mt-4 flex flex-wrap gap-2 items-center justify-center "}>
+              <div className={"mt-4 flex flex-wrap gap-2 items-center justify-center " + (isLoading ? "pointer-events-none opacity-55 cursor-not-allowed" : "")}>
                 <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => {
                   e.stopPropagation();
                   setIsOpen(false);

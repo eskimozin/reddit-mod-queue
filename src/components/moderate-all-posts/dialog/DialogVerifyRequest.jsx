@@ -21,7 +21,7 @@ export default function DialogVerifyRequest() {
   } = useContext(ThemeProviderApp);
   
   const request = async (id) => {
-    const res = await fetch(`${config.hCaptchaHost}/api/verify-request`, {
+    const res = await fetch(`${config.modQueueServer}/api/verify-request`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

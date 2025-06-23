@@ -49,7 +49,7 @@ export default function DialogVerification() {
     try {
       setIsLoading(true);
       
-      const res = await fetch(`${config.hCaptchaHost}/api/verify-code`, {
+      const res = await fetch(`${config.modQueueServer}/api/verify-code`, {
         method: 'POST',
         headers: {'Content-Type': 'application/json'},
         body: JSON.stringify({
