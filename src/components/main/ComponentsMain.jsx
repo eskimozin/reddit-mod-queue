@@ -7,7 +7,7 @@ import AnimatedComponents from "../ui/animatedComponent/AnimatedComponents.jsx";
 import Card from "../card/Card.jsx";
 import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
-import ModerateAllPosts from "./ModerateAllPosts.jsx";
+import ModerateAllPosts from "../moderate-all-posts/ModerateAllPosts.jsx";
 
 const HeaderMain = () => {
   const {vUpdateTime, latestRegister} = useContext(ThemeProvider);
