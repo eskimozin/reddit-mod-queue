@@ -5,6 +5,8 @@ import AnimatedComponents from "../../ui/animatedComponent/AnimatedComponents.js
 import React, {useContext, useEffect, useState} from "react";
 import {ThemeProvider} from "../ModerateAllPostsContext.jsx";
 import config from "../../../config.js";
+import moment from "moment";
+import Util from "../../../assets/Util.jsx";
 
 export default function DialogVerification() {
   const [token, setToken] = useState("");
@@ -93,7 +95,7 @@ export default function DialogVerification() {
               Confirmar {["aprovar", "reprovar"].includes(actionTxt.toLowerCase()) ? actionTxt.toLowerCase() === "aprovar" ? "aprovação dos posts" : "reprovação dos posts" : "ação"}
             </DialogTitle>
             <p className="mt-2 text-white/70">
-              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação. Ele é válido até {}
+              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação. Ele é válido até {credentials["datetimeCreate"] ? Util.renderText(moment(credentials["datetimeCreate"]).format("DD/MM/YYYY [às] HH:mm:ss [UTC]Z")) : "(validade do código não obtida)"}.
             </p>
             
             <form action={"#"} method={"POST"} onSubmit={handleSubmit}>
