@@ -1,9 +1,20 @@
 import moment from "moment";
 import config from "../../config.js";
 import Arial from "../ui/arial/Arial.jsx";
+import {useEffect, useState} from "react";
+import Util from "../../assets/Util.jsx";
 
 export default function Footer() {
   const styles = {fontWeight: 300, fontFamily: '"Inter Tight", "Inter", sans-serif', letterSpacing: 0.20};
+  const [dataBuild, setDataBuild] = useState({datetimeCreate: null});
+  
+  useEffect(() => {
+    fetch("./register.build.json").then((response) => {
+      return response.json();
+    }).then((json) => {
+      setDataBuild({...json});
+    })
+  }, []);
   
   return (
     <div className={"container text-center pt-8 lg:pt-10 mt-8 lg:mt-10 border-t border-slate-800"}>
@@ -16,6 +27,7 @@ export default function Footer() {
           <span>Fila de moderação do r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span>
         </div>
         <a href={config.links.developer} className={"text-decoration-none fw-light focus-headless"} style={{...styles, color: "inherit"}}>Feito com 💖 pelo {config["ui-infos"]["developer-name"]}.</a>
+        {dataBuild.datetimeCreate && <span className={"block text-[13px] mt-2 text-white"}>Versão de build: {Util.renderText(moment(dataBuild.datetimeCreate).utc(true).format("HH[h]mm[m] DD/MM/YYYY [UTC-03:00]"))}</span>}
       </div>
     </div>
   )

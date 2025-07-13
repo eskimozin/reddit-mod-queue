@@ -36,6 +36,7 @@ export default function UpdateTime({time}) {
     const seconds = momentNow.diff(momentTime, "seconds");
     let minutes = momentNow.diff(momentTime, "minutes");
     let hours = momentNow.diff(momentTime, "hours");
+    let days = momentNow.diff(momentTime, "days");
     
     // Implementação para forçar a apresentação de horário correto em produção
     hours = window.location.hostname === "localhost" ? hours : hours - 3;
@@ -49,7 +50,8 @@ export default function UpdateTime({time}) {
     
     // console.log(seconds, minutes, hours, momentTime.diff(momentTime, "hours"), momentTime.diff(momentTime, "minutes"));
     
-    if (hours > 0) setFormattedTime(`${hours} ${hours > 1 ? "horas" : "hora"}`);
+    if (hours > 24) setFormattedTime(`${days} ${days > 1 ? "dias" : "dia"}`);
+    else if (hours > 0) setFormattedTime(`${hours} ${hours > 1 ? "horas" : "hora"}`);
     else if (minutes > 0) setFormattedTime(`${minutes} ${minutes > 1 ? "minutos" : "minuto"}`);
     else if (seconds > 0) setFormattedTime(`${seconds} ${seconds > 1 ? "segundos" : "segundo"}`);
     else setFormattedTime("pouco");

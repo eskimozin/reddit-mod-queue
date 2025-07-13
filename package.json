@@ -6,12 +6,12 @@
   "homepage": "https://github.com/eskimozin/reddit-mod-queue",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "build:lint": "npm run lint && vite build",
+    "build": "node register.build.js && vite build",
+    "build:lint": "node register.build.js && npm run lint && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint src/**/*.jsx --fix",
     "preview": "vite preview",
-    "deploy": "vite build && gh-pages -d dist"
+    "deploy": "node register.build.js && vite build && gh-pages -d dist"
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.12.0",

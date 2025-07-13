@@ -37,7 +37,7 @@ function ModerateAllPostsContext({children}) {
   }, [])
   
   const setFeedbackMessage = useCallback((e, val, setter) => {
-    console.log(val)
+    // console.log(val)
     
     const action = [
       {e: "code", func: val.filter(v => v.trim().length === 0).length === 0, ok: "", incomplete: 'Preencha todos os números do código'}

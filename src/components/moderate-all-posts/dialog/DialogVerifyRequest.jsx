@@ -7,7 +7,7 @@ import {ThemeProvider as ThemeProviderApp} from "../../../App.jsx";
 
 export default function DialogVerifyRequest() {
   const [statusRequest, setStatusRequest] = useState("Em instantes a solicitação será concluída. Aguarde...");
-  const [stopVerifyInterval, setstopVerifyInterval] = useState(false);
+  const [stopVerifyInterval, setStopVerifyInterval] = useState(false);
   
   const {
     isOpen,
@@ -37,7 +37,8 @@ export default function DialogVerifyRequest() {
     
     if (stopVerifyInterval) {
       setStopAppInterval(false);
-      return () => {}
+      return () => {
+      }
     }
     
     interval = setInterval(async () => {
@@ -52,7 +53,7 @@ export default function DialogVerifyRequest() {
             break;
           case 3:
             setStatusRequest("Solicitação executada com sucesso");
-            setstopVerifyInterval(true);
+            setStopVerifyInterval(true);
             break;
           default:
             setStatusRequest("Status da execução não mapeado");
@@ -66,6 +67,10 @@ export default function DialogVerifyRequest() {
       clearInterval(interval);
     }
   }, [stopVerifyInterval]);
+  
+  useEffect(() => {
+    if (isOpen === false) setStopVerifyInterval(true);
+  }, [isOpen]);
   
   return (
     <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={() => setIsOpen(false)}>
