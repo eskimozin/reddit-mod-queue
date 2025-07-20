@@ -49,14 +49,14 @@ export default function DialogVerifyRequest() {
         // console.log(res);
         switch (parseInt(res.status)) {
           case 2:
-            setStatusRequest("Em instantes a solicitação será concluída. Aguarde...");
+            setStatusRequest("Em instantes a solicitação será concluída. É só aguardar. Você pode fechar a página, quando a solicitação tiver sido concluída, uma mensagem será enviada no canal de logs do Discord.");
             break;
           case 3:
-            setStatusRequest("Solicitação executada com sucesso");
+            setStatusRequest("A sua solicitação foi executada com sucesso.");
             setStopVerifyInterval(true);
             break;
           default:
-            setStatusRequest("Status da execução não mapeado");
+            setStatusRequest("Status da execução não mapeado.");
             break;
         }
       }
