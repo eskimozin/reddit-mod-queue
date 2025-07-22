@@ -6,7 +6,7 @@ import {ThemeProvider as ThemeProviderModerateAll} from "../ModerateAllPostsCont
 import {ThemeProvider as ThemeProviderApp} from "../../../App.jsx";
 
 export default function DialogVerifyRequest() {
-  const [statusRequest, setStatusRequest] = useState("Em instantes a solicitação será concluída. Aguarde...");
+  const [statusRequest, setStatusRequest] = useState("Confirmando a sua solicitação. Por favor aguarde alguns intantes.");
   const [stopVerifyInterval, setStopVerifyInterval] = useState(false);
   
   const {
@@ -49,7 +49,7 @@ export default function DialogVerifyRequest() {
         // console.log(res);
         switch (parseInt(res.status)) {
           case 2:
-            setStatusRequest("Em instantes a solicitação será concluída. É só aguardar. Você pode fechar a página, quando a solicitação tiver sido concluída, uma mensagem será enviada no canal de logs do Discord.");
+            setStatusRequest("Em instantes a solicitação será concluída. É só aguardar. Você pode fechar a página. Quando a solicitação tiver sido concluída, uma mensagem será enviada no canal de logs do Discord.");
             break;
           case 3:
             setStatusRequest("A sua solicitação foi executada com sucesso.");
