@@ -22,10 +22,10 @@ export default function DialogVerification() {
     captchaRef2,
     action,
     actionTxt,
-    credentials,
     setAllOk,
     setFeedbackMessage,
     setIdVerificationRequest,
+    credentials
   } = useContext(ThemeProvider)
   
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function DialogVerification() {
               Confirmar {["aprovar", "reprovar"].includes(actionTxt.toLowerCase()) ? actionTxt.toLowerCase() === "aprovar" ? "aprovação dos posts" : "reprovação dos posts" : "ação"}
             </DialogTitle>
             <p className="mt-2 text-white/70">
-              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação. Ele é válido até {credentials["datetimeCreate"] ? Util.renderText(moment(credentials["datetimeCreate"]).utc(true).add(5, "m").format("DD/MM/YYYY [às] HH:mm:ss [UTC]Z")) : "(validade do código não obtida)"}.
+              Enviamos um código para o canal de logs do servidor no Discord. Informe abaixo e confirme. Se o código expirar, reinicie a solicitação. Ele é válido até {credentials["datetimeValid"] ? Util.renderText(moment(credentials["datetimeValid"]).utc(true).format("DD/MM/YYYY [às] HH:mm:ss [UTC-03:00]")) : "(validade do código não obtida)"}.
             </p>
             
             <form action={"#"} method={"POST"} onSubmit={handleSubmit}>
