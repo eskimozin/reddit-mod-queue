@@ -53,7 +53,7 @@ export default function Validator() {
     }
     
     let [id, datetimeCreate, action, code] = params.id.split('A');
-    datetimeCreate = moment(datetimeCreate, "x").add(3, "hours").format("YYYY-MM-DD HH:mm:ss");
+    datetimeCreate = moment(datetimeCreate, "x").format("YYYY-MM-DD HH:mm:ss");
     console.log({id, datetimeCreate, action, code})
     
     confirmAction({token, id, action, code, datetimeCreate}).then(() => {
