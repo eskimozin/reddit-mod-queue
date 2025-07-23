@@ -1,7 +1,8 @@
 import {useEffect, useState, Suspense, lazy, createContext} from "react";
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import {Routes, Route, HashRouter} from 'react-router-dom';
 
 import Loading from "./components/loading/Loading.jsx";
+import Validator from "./components/ui/validator/Validator.jsx";
 
 export const ThemeProvider = createContext(null);
 
@@ -37,13 +38,14 @@ export function App() {
   
   return (
     <ThemeProvider.Provider value={{...contextValues}}>
-      <BrowserRouter>
+      <HashRouter>
         <Suspense fallback={<Loading/>}>
           <Routes index element={componentMain}>
-            <Route path="/reddit-mod-queue/" element={componentMain}/>
+            <Route path="/" element={componentMain}/>
+            <Route path="/val/:id" element={<Validator/>}/>
           </Routes>
         </Suspense>
-      </BrowserRouter>
+      </HashRouter>
     </ThemeProvider.Provider>
   )
 }

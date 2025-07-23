@@ -5,10 +5,19 @@ import {ThemeProvider as ThemeProviderApp} from "../../App.jsx";
 const ThemeProvider = createContext(null);
 
 function ModerateAllPostsContext({children}) {
+  if (!ThemeProviderApp || !useContext) {
+    alert("O contexto \"ThemeProvider\" não é válido. Não é possível renderizar as ações.");
+    return null
+  } else if (!useContext(ThemeProviderApp)) {
+    alert("O contexto \"ThemeProvider\" não é válido. Não é possível renderizar as ações.");
+    return null
+  }
+  
   let {
-    setStopAppInterval
+    setStopAppInterval,
   } = useContext(ThemeProviderApp);
   
+  const [credentials, setCredentials] = useState({});
   const inputLength = 6;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -20,7 +29,6 @@ function ModerateAllPostsContext({children}) {
   const [message, setMessage] = useState('');
   const [action, setAction] = useState('');
   const [actionTxt, setActionTxt] = useState('');
-  const [credentials, setCredentials] = useState({});
   const [idVerificationRequest, setIdVerificationRequest] = useState();
   const [allOk, setAllOk] = useState(false);
   
@@ -70,14 +78,14 @@ function ModerateAllPostsContext({children}) {
     setAction,
     actionTxt,
     setActionTxt,
-    credentials,
-    setCredentials,
     allOk,
     setAllOk,
     setFeedbackMessage,
     clearValues,
     idVerificationRequest,
     setIdVerificationRequest,
+    credentials,
+    setCredentials
   }
   
   return (

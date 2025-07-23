@@ -22,10 +22,10 @@ export default function DialogVerification() {
     captchaRef2,
     action,
     actionTxt,
-    credentials,
     setAllOk,
     setFeedbackMessage,
     setIdVerificationRequest,
+    credentials
   } = useContext(ThemeProvider)
   
   useEffect(() => {
