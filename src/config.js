@@ -2,7 +2,7 @@ export default {
   "ui-infos": {
     "subreddit-name": "eskimozin",
     "header-img": {
-      "url": "https://styles.redditmedia.com/t5_djonfq/styles/communityIcon_so6opouwbkwe1.jpeg?format=pjpg&s=87d36ec6c490962999a51fdc8b64bf180892131a",
+      "url": "./reddit-cmn-icon.png",
       "alt": "Foto de perfil do r/eskimozin"
     },
     "developer-name": "Gabriel",
