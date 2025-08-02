@@ -8,18 +8,18 @@ import {ThemeProvider as ThemeProviderApp} from "../../../App.jsx";
 export default function DialogVerifyRequest() {
   const [statusRequest, setStatusRequest] = useState("Confirmando a sua solicitação. Por favor aguarde alguns intantes.");
   const [stopVerifyInterval, setStopVerifyInterval] = useState(false);
-  
+
   const {
     isOpen,
     setIsOpen,
     message,
     idVerificationRequest,
   } = useContext(ThemeProviderModerateAll)
-  
+
   let {
     setStopAppInterval
   } = useContext(ThemeProviderApp);
-  
+
   const request = async (id) => {
     const res = await fetch(`${config.modQueueServer}/api/verify-request`, {
       method: 'POST',
@@ -28,23 +28,23 @@ export default function DialogVerifyRequest() {
         id: id,
       }),
     });
-    
+
     return await res.json();
   }
-  
+
   useEffect(() => {
     let interval;
-    
+
     if (stopVerifyInterval) {
       setStopAppInterval(false);
       return () => {
       }
     }
-    
+
     interval = setInterval(async () => {
       if (!idVerificationRequest) return;
       const res = await request(idVerificationRequest);
-      
+
       if (res.success) {
         // console.log(res);
         switch (parseInt(res.status)) {
@@ -61,17 +61,17 @@ export default function DialogVerifyRequest() {
         }
       }
     }, 1000)
-    
+
     return () => {
       setStopAppInterval(false);
       clearInterval(interval);
     }
   }, [stopVerifyInterval]);
-  
+
   useEffect(() => {
     if (isOpen === false) setStopVerifyInterval(true);
   }, [isOpen]);
-  
+
   return (
     <Dialog open={isOpen} as="div" className="relative z-30 focus:outline-none" onClose={() => setIsOpen(false)}>
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-black/70 backdrop-blur-md">
@@ -83,21 +83,21 @@ export default function DialogVerifyRequest() {
             <DialogTitle as="h3" className="font-semibold text-[1.55rem]">
               Solicitação enviada
             </DialogTitle>
-            
-            <p className="mt-4 my-6 text-white/70">
+
+            <p className={"mt-4 my-6 " + statusRequest?.toLowerCase().includes("em instantes a solicitação será concluída") ? "text-green-600/70" : "text-white/70"}>
               {statusRequest}
             </p>
-            
+
             {
               message && (
                 <AnimatedComponents>
-                  <div className="flex flex-wrap gap-2 items-center text-center p-3 bg-orange-500/5 border border-orange-300/25 text-orange-300 mt-4 rounded">
+                  <div className={"flex flex-wrap gap-2 items-center text-center p-3 mt-4 rounded" + (message?.toLowerCase().includes("em instantes a solicitação será concluída") ? "bg-green-500/5 border border-green-300/25 text-green-600" : "bg-orange-500/5 border border-orange-300/25 text-orange-300")}>
                     <p className={"text-balance"}>{message}</p>
                   </div>
                 </AnimatedComponents>
               )
             }
-            
+
             <div className="mt-4 flex flex-wrap gap-2 items-center justify-center">
               <Button className="inline-flex items-center gap-2 rounded-md bg-gray-700 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless" onClick={(e) => {
                 e.stopPropagation();
