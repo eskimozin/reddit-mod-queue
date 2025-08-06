@@ -42,7 +42,7 @@ export function App() {
         <Suspense fallback={<Loading/>}>
           <Routes index element={componentMain}>
             <Route path="/" element={componentMain}/>
-            <Route path="/val/:id" element={<Validator/>}/>
+            <Route path="/val/:id?" element={<Validator/>}/>
           </Routes>
         </Suspense>
       </HashRouter>
