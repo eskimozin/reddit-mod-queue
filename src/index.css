@@ -115,3 +115,9 @@ a:focus {
 .arial {
   font-family: 'Arial', sans-serif;
 }
+
+.link-outline-none {
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+}

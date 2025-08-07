@@ -8,25 +8,33 @@ import Card from "../card/Card.jsx";
 import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
 import ModerateAllPosts from "../moderate-all-posts/ModerateAllPosts.jsx";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router";
 
 const HeaderMain = () => {
 	let vUpdateTime = null;
 	let latestRegister = null;
+	const navigate = useNavigate();
 	
 	if (ThemeProvider) {
 		vUpdateTime = useContext(ThemeProvider) ? useContext(ThemeProvider)["vUpdateTime"] : null;
 		latestRegister = useContext(ThemeProvider) ? useContext(ThemeProvider)["latestRegister"] : null;
 	}
 	
+	const returnToHome = (e) => {
+		e.preventDefault();
+		navigate("/", {replace: true});
+	}
+	
 	return (
-			<Link to={"/"} className={"flex items-center gap-4 mb-8 flex-wrap"}>
+		<hgroup className={"flex items-center gap-4 mb-8 flex-wrap link-outline-none border-0"}>
+			<div role={"button"} onClick={returnToHome}>
 				<img src={config["ui-infos"]["header-img"]["url"]} alt={config["ui-infos"]["header-img"]["alt"]} className={"rounded-full w-[50px] h-[50px] object-cover"}/>
-				<div className={"block"}>
-					<h1 className={"text-balance font-bold text-3xl"}>Fila de moderação do <span className={"text-orange-600"}>r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span></h1>
-					{vUpdateTime && latestRegister && <p className={"mb-0 mt-1 text-gray-400 text-balance max-w-[600px]"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila de moderação há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação da fila é feita a cada 5 minutos.</p>}
-				</div>
-			</Link>
+			</div>
+			<div role={"button"} onClick={returnToHome} className={"block"}>
+				<h1 className={"text-balance font-bold text-3xl"}>Fila de moderação do <span className={"text-orange-600"}>r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span></h1>
+				{vUpdateTime && latestRegister && <p className={"mb-0 mt-1 text-gray-400 text-balance max-w-[600px]"}>Atualizado há {vUpdateTime ? <UpdateTime time={vUpdateTime}/> : "pouco"}. O último post entrou na fila de moderação há {latestRegister ? <UpdateTime time={latestRegister}/> : "pouco"}. A verificação da fila é feita a cada 5 minutos.</p>}
+			</div>
+		</hgroup>
 	)
 }
 
