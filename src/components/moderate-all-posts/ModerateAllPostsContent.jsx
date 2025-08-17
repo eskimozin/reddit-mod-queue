@@ -39,7 +39,7 @@ export default function ModerateAllPostsContent() {
       {codeSend && allOk && <DialogVerifyRequest/>}
       
       <Menu>
-        <MenuButton className="mt-8 inline-flex items-center focus-headless gap-2 rounded bg-gray-800 px-3 py-2  text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
+        <MenuButton className="mt-4 inline-flex items-center focus-headless gap-2 rounded bg-gray-800 px-3 py-2  text-white  focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-700 data-open:bg-gray-700">
           Moderar todos de uma vez
           <ChevronDownIcon className="size-4 fill-white/60"/>
         </MenuButton>

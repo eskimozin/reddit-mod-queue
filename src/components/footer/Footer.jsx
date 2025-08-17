@@ -26,8 +26,8 @@ export default function Footer() {
           <span>{moment().utc().format("YYYY")} - </span>
           <span>Fila de moderação do r<Arial>/</Arial>{config["ui-infos"]["subreddit-name"]}</span>
         </div>
-        <a href={config.links.developer} className={"text-decoration-none fw-light focus-headless"} style={{...styles, color: "inherit"}}>Feito com 💖 pelo {config["ui-infos"]["developer-name"]}.</a>
-        {dataBuild.datetimeCreate && <span className={"block text-[13px] mt-2 text-white"}>Versão de build: {Util.renderText(moment(dataBuild.datetimeCreate).utc(true).format("HH[h]mm[m] DD/MM/YYYY [UTC-03:00]"))}</span>}
+        <a href={config.links.developer} className={"fw-light focus-headless"} style={{...styles, color: "inherit"}}>Feito com 💖 pelo {config["ui-infos"]["developer-name"]}.</a>
+        {dataBuild.datetimeCreate && <span className={"block text-[13px] mt-2 text-white"}>Versão de build: {Util.renderText(moment(dataBuild.datetimeCreate).utc(true).format("HH[h]mm[m] DD/MM/YYYY [GMT-03:00]"))}</span>}
       </div>
     </div>
   )

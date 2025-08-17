@@ -9,6 +9,7 @@ import Alert from "../ui/alert/Alert.jsx";
 import config from "../../config.js";
 import ModerateAllPosts from "../moderate-all-posts/ModerateAllPosts.jsx";
 import {useNavigate} from "react-router";
+import OpenAllPosts from "../open-all-posts/OpenAllPosts.jsx";
 
 const HeaderMain = () => {
 	let vUpdateTime = null;
@@ -109,7 +110,10 @@ const AditionalActions = () => {
 		<>
 			{
 				postsPending && postsPending.length > 1 && (
-					<ModerateAllPosts/>
+					<div className={"mt-8"}>
+						<OpenAllPosts/>
+						<ModerateAllPosts/>
+					</div>
 				)
 			}
 		</>
