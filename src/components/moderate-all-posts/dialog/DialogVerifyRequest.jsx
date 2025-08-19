@@ -83,15 +83,19 @@ export default function DialogVerifyRequest() {
             <DialogTitle as="h3" className="font-semibold text-[1.55rem]">
               Solicitação enviada
             </DialogTitle>
-
-            <p className={"mt-4 my-6 " + statusRequest?.toLowerCase().includes("em instantes a solicitação será concluída") ? "text-green-600/70" : "text-white/70"}>
-              {statusRequest}
-            </p>
+            
+            {
+              statusRequest && (
+                <p className={"mt-4 mb-6 flex flex-wrap gap-2 items-center text-center p-3 rounded " + (statusRequest.toLowerCase().includes("em instantes a solicitação será concluída") ? "bg-green-500/5 border border-green-300/25 text-green-600" : "bg-orange-500/5 border border-orange-300/25 text-orange-300 text-balance")}>
+                  {statusRequest}
+                </p>
+              )
+            }
 
             {
               message && (
                 <AnimatedComponents>
-                  <div className={"flex flex-wrap gap-2 items-center text-center p-3 mt-4 rounded" + (message?.toLowerCase().includes("em instantes a solicitação será concluída") ? "bg-green-500/5 border border-green-300/25 text-green-600" : "bg-orange-500/5 border border-orange-300/25 text-orange-300")}>
+                  <div className={"flex flex-wrap gap-2 items-center text-center p-3 mt-4 rounded " + (message?.toLowerCase().includes("tudo certo!") ? "bg-green-500/5 border border-green-300/25 text-green-600" : "bg-orange-500/5 border border-orange-300/25 text-orange-300")}>
                     <p className={"text-balance"}>{message}</p>
                   </div>
                 </AnimatedComponents>
