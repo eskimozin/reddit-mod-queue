@@ -15,7 +15,7 @@ export default function OpenAllPosts() {
         })
       }
     }} className="inline-block items-center gap-2 rounded-md bg-slate-800 px-3 py-1.5 text-white focus:not-data-focus:outline-none data-focus:outline data-focus:outline-white data-hover:bg-gray-600 data-open:bg-gray-700 focus-headless">
-      Abrir os primeiros 10 posts da lista em novas guias
+      {postsPending.length <= 10 ? "Abrir todos os posts em novas guias" : "Abrir os primeiros 10 posts da lista em novas guias"}
     </Button>
   )
 }
