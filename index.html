@@ -2,10 +2,44 @@
 <html lang="pt-BR" class="dark">
 <head>
   <meta charset="UTF-8"/>
-    <link rel="icon" type="image/png" href="favicon.png"/>
+  <link rel="icon" type="image/png" href="favicon.png"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Fila de moderação - r/eskimozin</title>
-  <script type="module" crossorigin src="/reddit-mod-queue/assets/index-BdsQkAny.js"></script>
+  
+  <style>
+    .overlay-appx * {
+      font-size: 16px !important;
+    }
+    
+    .overlay-appx {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #080C14 !important;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .spinner-first-load-appx {
+      width: 40px !important;
+      height: 40px !important;
+      border-radius: 50% !important;
+      border: 6px solid #D9770650 !important;
+      border-right-color: #D97706 !important;
+      animation: spinner-appx 1.2s infinite linear;
+    }
+    
+    @keyframes spinner-appx {
+      to {
+        transform: rotate(1turn);
+      }
+    }
+  </style>
+  <script type="module" crossorigin src="/reddit-mod-queue/assets/index-CXU0lGCq.js"></script>
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/cookie-CXUWDbkB.js">
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/react-5K_EyRjd.js">
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/scheduler-6ULW7vKx.js">
@@ -26,9 +60,14 @@
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/imask-BS2bIgfR.js">
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/react-imask-j4KKpLwG.js">
   <link rel="modulepreload" crossorigin href="/reddit-mod-queue/assets/@heroicons-CcBWf5yt.js">
-  <link rel="stylesheet" crossorigin href="/reddit-mod-queue/assets/index-fbAngewm.css">
+  <link rel="stylesheet" crossorigin href="/reddit-mod-queue/assets/index-MvdfspCv.css">
 </head>
 <body>
+
+<div class="overlay-appx">
+  <div class="spinner-first-load-appx"></div>
+</div>
+
 <div id="root"></div>
 </body>
 </html>
