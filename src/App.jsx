@@ -34,6 +34,10 @@ export function App() {
   
   useEffect(() => {
     setComponentMain(<Main/>);
+  }, []);
+  
+  useEffect(() => {
+    document.querySelector(".overlay-appx").style.display = "none";
   }, [])
   
   return (
