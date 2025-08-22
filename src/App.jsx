@@ -37,7 +37,9 @@ export function App() {
   }, []);
   
   useEffect(() => {
-    document.querySelector(".overlay-appx").style.display = "none";
+    setTimeout(() => {
+      document.querySelector(".overlay-appx").style.display = "none";
+    }, 250);
   }, [])
   
   return (
