@@ -10,7 +10,7 @@ export default function Main() {
     <ContextMain>
       <UseMain/>
       <div className="flex align-center justify-center">
-        <div className="container mx-3 my-8 lg:my-10 min-h-[90vh] flex justify-between flex-col">
+        <div className="container mx-3 my-8 lg:my-10 min-h-[90vh] flex items-stretch justify-between flex-col">
           <main>
             <AnimatedComponents>
               <HeaderMain/>
