@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import Util from "../../assets/Util.jsx";
 
 export default function Footer() {
-  const styles = {fontFamily: '"Inter", sans-serif'};
+  const styles = {fontFamily: '"Inter Tight", "Inter", sans-serif', letterSpacing: "-0.25px"};
   const [dataBuild, setDataBuild] = useState({datetimeCreate: null});
   
   useEffect(() => {

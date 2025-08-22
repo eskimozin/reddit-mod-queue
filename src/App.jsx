@@ -43,15 +43,17 @@ export function App() {
   }, [])
   
   return (
-    <ThemeProvider.Provider value={{...contextValues}}>
-      <HashRouter>
-        <Suspense fallback={<Loading/>}>
-          <Routes index element={componentMain}>
-            <Route path="/" element={componentMain}/>
-            <Route path="/val/:id?" element={<Validator/>}/>
-          </Routes>
-        </Suspense>
-      </HashRouter>
-    </ThemeProvider.Provider>
+    <div className="select-none">
+      <ThemeProvider.Provider value={{...contextValues}}>
+        <HashRouter>
+          <Suspense fallback={<Loading/>}>
+            <Routes index element={componentMain}>
+              <Route path="/" element={componentMain}/>
+              <Route path="/val/:id?" element={<Validator/>}/>
+            </Routes>
+          </Suspense>
+        </HashRouter>
+      </ThemeProvider.Provider>
+    </div>
   )
 }
