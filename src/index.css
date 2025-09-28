@@ -73,6 +73,11 @@
   }
 }
 
+@font-face {
+    font-family: Arial;
+    src: url("/fonts/Arial.ttf");
+}
+
 * {
   font-family: 'Inter', 'Inter Tight', 'Arial', sans-serif;
   outline: none !important;
